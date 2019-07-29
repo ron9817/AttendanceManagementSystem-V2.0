@@ -1,0 +1,393 @@
+<!--
+to do:-
+fix width of subject and % width
+fix collapse toggle
+add common class for subject and proxy and for proxy have some other class
+-->
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <title>Attendance Management System or active day</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Exo&display=swap" rel="stylesheet">
+
+        <style>
+/*
+div{
+    box-sizing: border-box;
+}
+*/
+/*            ap-utility-classes*/
+body{
+    min-width: 380px;
+}
+.ap-text-white{
+    color: white;
+}
+.ap-blue-text{
+    color: #4992a4;
+}
+.ap-bold{
+    font-weight: 700;
+}
+.ap-bold-6{
+    font-weight: 600;
+}
+.ap-12{
+    font-size: 12px;
+}
+.ap-bg-blue{
+    background-color: #92e4fc !important;
+}
+.ap-border-blue{
+    border: 1px solid #4992a4;
+    border-radius: 0px;
+}
+.ap-button{
+    background: none;
+    border: none;
+    font-size: 15px;
+    font-family: 'Exo', sans-serif;
+}
+.ap-no-click{
+    pointer-events: none;
+}
+.ap-pointer{
+    cursor:pointer;
+}
+.ap-inline-block{
+    display: inline-block;
+}
+.ap-disp-none{
+    display: none;
+}
+.ap-disp-inherit{
+    display: inherit;
+}
+.ap-float-left{
+    float: left;
+}
+.ap-clear{
+    clear:both;
+}
+/*            ap other class*/
+.day{
+    background-color: #92e4fc;
+    font-size: 12px;
+    font-family: 'Exo', sans-serif;
+    /*min-width: 85px;*/
+    min-width: 95px;
+    border-radius: 0.7rem;
+    color: #4992a4;
+    font-weight: 400;
+}
+.day.active{
+    background-color: #00a5d1;
+    color: #fff;
+}
+.subject{
+    background-color: #d5d5d5;
+    font-size: 15px;
+    font-family: 'Exo', sans-serif;
+    /*min-width: 85px;*/
+    min-width: 95px;
+    color: white;
+}
+.subject.active{
+    background-color: transparent;
+}/*also remove padding class*/
+.subjectSpan{
+    display: inline-block;
+    width: 100%;
+}
+.subjectSpan.active{
+    transition: all 1s ease;
+    color: #4992a4;
+    width: 0%;
+    background-color: #f5faab;
+}
+.subject.active.present{
+    transition: all 1s ease;
+    background-color: #72bb52;
+    /*width: auto;*/
+    color: #fff;
+}
+.subject.active.absent{
+    transition: all 1s ease;
+    background-color: #e61711;
+    /*width: auto;*/
+    color: #fff;
+}
+.subject.active.off{
+    transition: all 1s ease;
+    background-color: #606060;
+    /*width: auto;*/
+    color: #fff;
+}
+.ap-marker{
+    border: 1px solid #c0c0c0;
+    border-radius: 50%;
+    background-color:#c0c0c0;
+    font-size: 15px;
+    height: 24px;
+    width: 24px;
+    display: inline-block;
+    transition: 1s all ease;
+    font-family: 'Exo', sans-serif;
+    cursor: pointer;
+}
+.ap-marker.marked{
+    border: 1px solid #000;
+    border-radius: 50%;
+    background-color:#fff;
+}
+.ap-marker.marked.present{
+    border: 1px solid #72bb52;
+    border-radius: 50%;
+    background-color:#72bb52;
+}
+.ap-marker.marked.absent{
+    border: 1px solid #e61711;
+    border-radius: 50%;
+    background-color:#e61711;
+}
+.ap-marker.marked.off{
+    border: 1px solid #606060;
+    border-radius: 50%;
+    background-color:#606060;
+}
+.empty{
+    font-size: 15px;
+    font-family: 'Exo', sans-serif;
+}
+.ap-visualization{
+    background: rgb(0,164,210);
+    background: linear-gradient(90deg, #92E4FC 25%, rgba(255,255,255,1) 75%);
+    font-size: 15px;
+    font-family: 'Exo', sans-serif;
+    color: #4992a4;
+}
+.ap-mark-button{
+    background: rgb(0,164,210);
+    font-size: 15px;
+    font-family: 'Exo', sans-serif;
+    color: #fff;
+    border: 1px solid;
+    border-color: #4992a4;
+}
+.ap-proxy-subject{
+    background-color: #d5d5d5;
+    font-size: 15px;
+    font-family: 'Exo', sans-serif;
+    color: #fff;
+}
+.ap-proxy-subject.present{
+    background-color:#72bb52;
+}
+.server-msg{
+    transition: all 1s ease;
+    font-family: 'Exo', sans-serif;
+}
+@media only screen and (max-width:900px){
+    .ap-xs-none{
+        display:none;
+        transition: all 1s ease;
+    }
+
+}
+/*
+.span{To make changes
+    background-color: #f5faab;
+    width: 100%;
+    display: inline-block;
+}
+*/
+/*
+.date-click{
+cursor: pointer;
+}
+*/
+        </style>
+        <script>
+            $(document).ready(function(){
+    const toDay=new Date();
+    $("#date-text").attr("value",toDay.toISOString().substr(0,10));
+    $("#mark-attendance").attr("title","Mark attendance for "+ toDay.getDate()+"/"+toDay.getMonth());
+    $(".subjectSpan.active").each(function(){
+        $(this).css("width",$(this).data("percent")+"%");
+    });
+    $(document).on("click",".ap-marker",function(){
+        let attendend=$(this).data("attendance");
+        $(this).parent().each(function(){
+            $(this).children().each(function(){
+                $(this).addClass("marked").removeClass($(this).data("attendance"));
+            });
+        });
+        $(this).addClass(attendend);
+        $($(this).data("target")).removeClass("absent").removeClass("present").removeClass("off").addClass(attendend).children(".subjectSpan").removeClass("active").css("width","100%");
+    });
+    $(document).on("click",".ap-proxy-subject",function(){
+        $(this).toggleClass("present");
+    });
+    $(document).on("click","#change-date",function(){
+        let date=new Date($("#date-text").val());
+        let dateString=date.getDate()+"/"+date.getMonth();
+        $("#mark-attendance").attr("title","Mark attendance for "+dateString);
+    });
+    $(document).on("click","#mark-attendance",function(){
+       jsonData={
+           present: new Array(),
+           absent: new Array(),
+           off: new Array(),
+           proxy: new Array(),
+           date: $("#date-text").val(),
+           time: new Date().getTime()
+       };
+        $(".countSubjectFlag-js").each(function(i){
+            if($(this).parent().hasClass("present") && !$(this).parent().hasClass("ap-proxy-subject"))
+                jsonData.present.push($(this).text());
+            if($(this).parent().hasClass("absent"))
+                jsonData.absent.push($(this).text());
+            if($(this).parent().hasClass("off"))
+                jsonData.off.push($(this).text());
+            if($(this).hasClass("present") && $(this).hasClass("ap-proxy-subject"))
+                jsonData.proxy.push($(this).text());
+        });
+        const jsonOData=JSON.stringify(jsonData);
+//Ajax final but just commented
+                    // $.post("/calcAttendance",jsonOData,function(responseTxt, statusTxt, xhr){
+                    //     if(statusTxt=="sucess"){
+                    //         const msg=JSON.parse(responseTxt);
+                    //         if(!msg.errorCode)
+                    //             $(".server-msg").text(msg.msg);
+                    //         else
+                    //             $(".server-msg").text("Error: "+msg.errorCode);
+                    //     }
+                    //     else
+                    //         $(".server-msg").text("Can not connect to server");
+                    // },"json");
+
+                    var xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        const msgg=JSON.parse(this.responseText);
+                        if(!msgg.errorCode)
+                            $(".server-msg").text(msgg.msg);
+                         else
+                            $(".server-msg").text("Error: "+msgg.errorCode);
+                        }
+                    };
+                    xhttp.open("post", "/calcAttendance/", true);
+                    xhttp.setRequestHeader("Content-type", "application/json;charset=UTF-8");
+                    xhttp.send(jsonOData);
+    });
+});
+
+
+
+
+//            $(document).on("click", ".date-click", function(){
+//                $(this).datepicker({
+//                    altField: "#date-text",
+//                    altFormat: "dd-mm-yy"
+//                });
+//            });
+        </script>
+    </head>
+    <body>
+        <div class="row  mx-5 my-2">
+            <div class="col">
+                <div class="input-group date-click">
+                    <div class="input-group-prepend">
+                        <span class="px-2 ap-bg-blue ap-border-blue"><i class="fa fa-calendar ap-blue-text" aria-hidden="true"></i></span>
+                    </div>
+                    <input type="date" class="form-control-sm ap-bg-blue ap-border-blue ap-blue-text" id="date-text">
+                    <div class="input-group-prepend">
+                        <span class="ap-bg-blue ap-border-blue">
+                            <button class="ap-button ap-blue-text" data-toggle="tooltip" title="Select date to mark previous attendance" data-placement="bottom" id="change-date">Change</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mx-5 my-2">
+            <div class="col">
+                <div class="d-flex justify-content-center">
+                {%for i,j in timeTable.items%}
+                    <div class="m-4 {%if i != active %}ap-xs-none{%endif%}" id={{i}}>
+                        <div class="row">
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col-auto day {%if i == active %}active ml-1{%else%} mx-1 {%endif%} my-2 p-2 text-center">{{i}}day</div>
+                                {%if i == active %}
+                                    <div class="col-auto my-2">
+                                        <span class="text-center ap-no-click ap-marker marked present mx-1 ap-text-white ap-bold">P</span>
+                                        <span class="text-center ap-no-click ap-marker marked absent mx-1 ap-text-white ap-bold">A</span>
+                                        <span class="text-center ap-no-click ap-marker marked off mx-1 ap-text-white ap-bold">O</span>
+                                    </div>
+                                {%endif%}
+                                </div>
+                            {%for k in j%}
+                                <div class="row">
+                                    <div class="col-auto subject {%if i == active %}active ml-1 p-0{%else%} mx-1 p-1 text-center{%endif%} my-2" {%if i == active%}id="s{{forloop.counter}}"{%endif%}>
+                                    {%if i != active %}
+                                        {{k}}
+                                    {%else%}
+                                        <span class="subjectSpan active py-1 text-center countSubjectFlag-js" data-percent="100" data-toggle="tooltip" title="100%" data-placement="bottom">{{k}}</span>
+                                    {%endif%}
+                                    </div>
+                                {%if i == active %}
+                                    <div class="col-auto my-2">
+                                        <span class="ap-marker mx-1" data-attendance="present" data-target="#s{{forloop.counter}}" data-toggle="tooltip" title="present" data-placement="bottom"></span>
+                                        <span class="ap-marker mx-1" data-attendance="absent" data-target="#s{{forloop.counter}}" data-toggle="tooltip" title="absent" data-placement="bottom"></span>
+                                        <span class="ap-marker mx-1" data-attendance="off" data-target="#s{{forloop.counter}}" data-toggle="tooltip" title="off" data-placement="bottom"></span>
+                                    </div>
+                                {%endif%}
+                                </div>
+                            {%endfor%}
+                            </div>
+                        </div>
+                    </div>
+                {%endfor%}
+                </div>
+            </div>
+        </div>
+        <div class="row mx-5 my-2">
+            <div class="col">
+                <span class="ap-bg-blue ap-blue-text ap-12 p-2 ap-inline-block">Mark Proxy Lectures<i class="fa fa-plus ml-2 ap-pointer" aria-hidden="true" data-toggle="collapse" data-target="#proxy-subject"></i></span>
+                <div id="proxy-subject" class="collapse my-1">
+                    <span class="m-1 ap-proxy-subject ap-pointer p-2 ap-inline-block countSubjectFlag-js">Proxy sub1</span>
+                    <span class="m-1 ap-proxy-subject ap-pointer p-2 ap-inline-block countSubjectFlag-js">Proxy sub2</span>
+                    <span class="m-1 ap-proxy-subject ap-pointer p-2 ap-inline-block countSubjectFlag-js">Proxy sub3</span>
+                    <span class="m-1 ap-proxy-subject ap-pointer p-2 ap-inline-block countSubjectFlag-js">Proxy sub4</span>
+                    <span class="m-1 ap-proxy-subject ap-pointer p-2 ap-inline-block countSubjectFlag-js">Proxy sub5</span>
+                </div>
+            </div>
+        </div>
+        <div class="row mx-5 my-2">
+            <div class="col">
+                <button class="ap-button ap-mark-button ap-bold-6 p-2" id="mark-attendance" data-toggle="tooltip" title="" data-placement="bottom">Mark Attendance</button>
+                <div class="server-msg ap-blue-text ap-12"></div>
+            </div>
+        </div>
+        <div class="row mx-5 my-4">
+            <div class="col ap-visualization p-2">
+                <span><i class="fa fa-bar-chart" aria-hidden="true"></i></span>
+                <span class="text-uppercase ap-bold">Attendance Visualisation</span>
+            </div>
+        </div>
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
