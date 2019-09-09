@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'mathfilters',
 ]
 
 MIDDLEWARE = [
@@ -79,8 +81,11 @@ WSGI_APPLICATION = 'attendancewebapp.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'djangoronkar$ams',
+        'USER': 'djangoronkar',
+        'PASSWORD': '159482673r',
+        'HOST': 'djangoronkar.mysql.pythonanywhere-services.com',
     }
 }
 

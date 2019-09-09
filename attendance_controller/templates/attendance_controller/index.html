@@ -4,6 +4,8 @@ fix width of subject and % width
 fix collapse toggle
 add common class for subject and proxy and for proxy have some other class
 -->
+{% load mathfilters %}
+{% load getItem %}
 <!doctype html>
 <html lang="en">
     <head>
@@ -18,207 +20,228 @@ add common class for subject and proxy and for proxy have some other class
         <link href="https://fonts.googleapis.com/css?family=Exo&display=swap" rel="stylesheet">
 
         <style>
-/*
-div{
-    box-sizing: border-box;
-}
-*/
-/*            ap-utility-classes*/
-body{
-    min-width: 380px;
-}
-.ap-text-white{
-    color: white;
-}
-.ap-blue-text{
-    color: #4992a4;
-}
-.ap-bold{
-    font-weight: 700;
-}
-.ap-bold-6{
-    font-weight: 600;
-}
-.ap-12{
-    font-size: 12px;
-}
-.ap-bg-blue{
-    background-color: #92e4fc !important;
-}
-.ap-border-blue{
-    border: 1px solid #4992a4;
-    border-radius: 0px;
-}
-.ap-button{
-    background: none;
-    border: none;
-    font-size: 15px;
-    font-family: 'Exo', sans-serif;
-}
-.ap-no-click{
-    pointer-events: none;
-}
-.ap-pointer{
-    cursor:pointer;
-}
-.ap-inline-block{
-    display: inline-block;
-}
-.ap-disp-none{
-    display: none;
-}
-.ap-disp-inherit{
-    display: inherit;
-}
-.ap-float-left{
-    float: left;
-}
-.ap-clear{
-    clear:both;
-}
-/*            ap other class*/
-.day{
-    background-color: #92e4fc;
-    font-size: 12px;
-    font-family: 'Exo', sans-serif;
-    /*min-width: 85px;*/
-    min-width: 95px;
-    border-radius: 0.7rem;
-    color: #4992a4;
-    font-weight: 400;
-}
-.day.active{
-    background-color: #00a5d1;
-    color: #fff;
-}
-.subject{
-    background-color: #d5d5d5;
-    font-size: 15px;
-    font-family: 'Exo', sans-serif;
-    /*min-width: 85px;*/
-    min-width: 95px;
-    color: white;
-}
-.subject.active{
-    background-color: transparent;
-}/*also remove padding class*/
-.subjectSpan{
-    display: inline-block;
-    width: 100%;
-}
-.subjectSpan.active{
-    transition: all 1s ease;
-    color: #4992a4;
-    width: 0%;
-    background-color: #f5faab;
-}
-.subject.active.present{
-    transition: all 1s ease;
-    background-color: #72bb52;
-    /*width: auto;*/
-    color: #fff;
-}
-.subject.active.absent{
-    transition: all 1s ease;
-    background-color: #e61711;
-    /*width: auto;*/
-    color: #fff;
-}
-.subject.active.off{
-    transition: all 1s ease;
-    background-color: #606060;
-    /*width: auto;*/
-    color: #fff;
-}
-.ap-marker{
-    border: 1px solid #c0c0c0;
-    border-radius: 50%;
-    background-color:#c0c0c0;
-    font-size: 15px;
-    height: 24px;
-    width: 24px;
-    display: inline-block;
-    transition: 1s all ease;
-    font-family: 'Exo', sans-serif;
-    cursor: pointer;
-}
-.ap-marker.marked{
-    border: 1px solid #000;
-    border-radius: 50%;
-    background-color:#fff;
-}
-.ap-marker.marked.present{
-    border: 1px solid #72bb52;
-    border-radius: 50%;
-    background-color:#72bb52;
-}
-.ap-marker.marked.absent{
-    border: 1px solid #e61711;
-    border-radius: 50%;
-    background-color:#e61711;
-}
-.ap-marker.marked.off{
-    border: 1px solid #606060;
-    border-radius: 50%;
-    background-color:#606060;
-}
-.empty{
-    font-size: 15px;
-    font-family: 'Exo', sans-serif;
-}
-.ap-visualization{
-    background: rgb(0,164,210);
-    background: linear-gradient(90deg, #92E4FC 25%, rgba(255,255,255,1) 75%);
-    font-size: 15px;
-    font-family: 'Exo', sans-serif;
-    color: #4992a4;
-}
-.ap-mark-button{
-    background: rgb(0,164,210);
-    font-size: 15px;
-    font-family: 'Exo', sans-serif;
-    color: #fff;
-    border: 1px solid;
-    border-color: #4992a4;
-}
-.ap-proxy-subject{
-    background-color: #d5d5d5;
-    font-size: 15px;
-    font-family: 'Exo', sans-serif;
-    color: #fff;
-}
-.ap-proxy-subject.present{
-    background-color:#72bb52;
-}
-.server-msg{
-    transition: all 1s ease;
-    font-family: 'Exo', sans-serif;
-}
-@media only screen and (max-width:900px){
-    .ap-xs-none{
-        display:none;
-        transition: all 1s ease;
-    }
+                /*ap-utility-classes*/
+                body{
+                    min-width: 380px;
+                }
+                .ap-text-white{
+                    color: white;
+                }
+                .ap-blue-text{
+                    color: #4992a4;
+                }
+                .ap-bold{
+                    font-weight: 700;
+                }
+                .ap-bold-6{
+                    font-weight: 600;
+                }
+                .ap-12{
+                    font-size: 12px;
+                }
+                .ap-bg-blue{
+                    background-color: #92e4fc !important;
+                }
+                .ap-border-blue{
+                    border: 1px solid #4992a4;
+                    border-radius: 0px;
+                }
+                .ap-button{
+                    background: none;
+                    border: none;
+                    font-size: 15px;
+                    font-family: 'Exo', sans-serif;
+                }
+                .ap-no-click{
+                    pointer-events: none;
+                }
+                .ap-pointer{
+                    cursor:pointer;
+                }
+                .ap-inline-block{
+                    display: inline-block;
+                }
+                .ap-disp-none{
+                    display: none;
+                }
+                .ap-disp-inherit{
+                    display: inherit;
+                }
+                .ap-float-left{
+                    float: left;
+                }
+                .ap-clear{
+                    clear:both;
+                }
+                /*ap other class*/
+                .day{
+                    background-color: #92e4fc;
+                    font-size: 12px;
+                    font-family: 'Exo', sans-serif;
+                    /*min-width: 85px;*/
+                    min-width: 95px;
+                    border-radius: 0.7rem;
+                    color: #4992a4;
+                    font-weight: 400;
+                }
+                .day.active{
+                    background-color: #00a5d1;
+                    color: #fff;
+                }
+                .subject{
+                    background-color: #d5d5d5;
+                    font-size: 15px;
+                    font-family: 'Exo', sans-serif;
+                    /*min-width: 85px;*/
+                    min-width: 95px;
+                    color: white;
+                }
+                .subject.active{
+                    background-color: transparent;
+                }/*also remove padding class*/
+                .subjectSpan{
+                    display: inline-block;
+                    width: 100%;
+                }
+                .subjectSpan.active{
+                    transition: all 1s ease;
+                    color: #4992a4;
+                    width: 0%;
+                    background-color: #f5faab;
+                }
+                .subject.active.present{
+                    transition: all 1s ease;
+                    background-color: #72bb52;
+                    /*width: auto;*/
+                    color: #fff;
+                }
+                .subject.active.absent{
+                    transition: all 1s ease;
+                    background-color: #e61711;
+                    /*width: auto;*/
+                    color: #fff;
+                }
+                .subject.active.off{
+                    transition: all 1s ease;
+                    background-color: #606060;
+                    /*width: auto;*/
+                    color: #fff;
+                }
+                .ap-marker{
+                    border: 1px solid #c0c0c0;
+                    border-radius: 50%;
+                    background-color:#c0c0c0;
+                    font-size: 15px;
+                    height: 24px;
+                    width: 24px;
+                    display: inline-block;
+                    transition: 1s all ease;
+                    font-family: 'Exo', sans-serif;
+                    cursor: pointer;
+                }
+                .ap-marker.marked{
+                    border: 1px solid #000;
+                    border-radius: 50%;
+                    background-color:#fff;
+                }
+                .ap-marker.marked.present{
+                    border: 1px solid #72bb52;
+                    border-radius: 50%;
+                    background-color:#72bb52;
+                }
+                .ap-marker.marked.absent{
+                    border: 1px solid #e61711;
+                    border-radius: 50%;
+                    background-color:#e61711;
+                }
+                .ap-marker.marked.off{
+                    border: 1px solid #606060;
+                    border-radius: 50%;
+                    background-color:#606060;
+                }
+                .empty{
+                    font-size: 15px;
+                    font-family: 'Exo', sans-serif;
+                }
+                .ap-visualization{
+                    background: rgb(0,164,210);
+                    background: linear-gradient(90deg, #92E4FC 25%, rgba(255,255,255,1) 75%);
+                    font-size: 15px;
+                    font-family: 'Exo', sans-serif;
+                    color: #4992a4;
+                }
+                .ap-mark-button{
+                    background: rgb(0,164,210);
+                    font-size: 15px;
+                    font-family: 'Exo', sans-serif;
+                    color: #fff;
+                    border: 1px solid;
+                    border-color: #4992a4;
+                }
+                .ap-proxy-subject{
+                    background-color: #d5d5d5;
+                    font-size: 15px;
+                    font-family: 'Exo', sans-serif;
+                    color: #fff;
+                }
+                .ap-proxy-subject.present{
+                    background-color:#72bb52;
+                }
+                .server-msg{
+                    transition: all 1s ease;
+                    font-family: 'Exo', sans-serif;
+                }
+                @media only screen and (max-width:900px){
+                    .ap-xs-none{
+                        display:none;
+                        transition: all 1s ease;
+                    }
 
-}
-/*
-.span{To make changes
-    background-color: #f5faab;
-    width: 100%;
-    display: inline-block;
-}
-*/
-/*
-.date-click{
-cursor: pointer;
-}
-*/
+                }
+                /*
+                .span{To make changes
+                    background-color: #f5faab;
+                    width: 100%;
+                    display: inline-block;
+                }
+                */
+                /*
+                .date-click{
+                cursor: pointer;
+                }
+                */
         </style>
         <script>
             $(document).ready(function(){
-    const toDay=new Date();
-    $("#date-text").attr("value",toDay.toISOString().substr(0,10));
-    $("#mark-attendance").attr("title","Mark attendance for "+ toDay.getDate()+"/"+toDay.getMonth());
+                {%if activeDate%}
+                    const toDay=new Date({{activeDate.0}},{{activeDate.1}},{{activeDate.2}});
+                 //{%else%}
+                    //const toDay=new Date();
+                {%endif%}
+
+    //$(".date-textSetter").attr("value",toDay.toISOString().substr(0,10));
+    if((toDay.getMonth()+1)>9)
+        var dateText=toDay.getFullYear()+'-'+(toDay.getMonth()+1);
+    else
+        var dateText=toDay.getFullYear()+'-0'+(toDay.getMonth()+1);
+    if(toDay.getDate()>9)
+        dateText+='-'+toDay.getDate()
+    else
+        dateText+='-0'+toDay.getDate()
+
+    var toDayPresent=new Date();
+    if((toDayPresent.getMonth()+1)>9)
+        var dateTextPresent=toDayPresent.getFullYear()+'-'+(toDayPresent.getMonth()+1);
+    else
+        var dateTextPresent=toDayPresent.getFullYear()+'-0'+(toDayPresent.getMonth()+1);
+    if(toDayPresent.getDate()>9)
+        dateTextPresent+='-'+toDayPresent.getDate()
+    else
+        dateTextPresent+='-0'+toDayPresent.getDate()
+
+    $(".date-textSetter").attr("value",dateText);
+    $(".date-textSetter").attr("max",dateTextPresent);
+    $("#mark-attendance").attr("title","Mark attendance for "+toDay.getDate()+"-"+(toDay.getMonth()+1)+"-"+toDay.getFullYear());
     $(".subjectSpan.active").each(function(){
         $(this).css("width",$(this).data("percent")+"%");
     });
@@ -236,17 +259,44 @@ cursor: pointer;
         $(this).toggleClass("present");
     });
     $(document).on("click","#change-date",function(){
-        let date=new Date($("#date-text").val());
-        let dateString=date.getDate()+"/"+date.getMonth();
-        $("#mark-attendance").attr("title","Mark attendance for "+dateString);
+        //let date=new Date($("#date-text").val());
+        //toDay=new Date($("#date-text").val());
+        //let dateString=toDay.getDate()+"-"+toDay.getMonth()+"-"+date.getFullYear();
+        //$("#mark-attendance").attr("title","Mark attendance for "+dateString);
+        $("#form-change").submit();
     });
+    let timesMarkAttendanceClicked=0;
     $(document).on("click","#mark-attendance",function(){
+        if(timesMarkAttendanceClicked>0){
+            $(".date-textSetter").attr("value",dateText);
+            console.log("dateText",dateText);
+        }
+        if($("#date-text").val()!=dateText && timesMarkAttendanceClicked==0){
+            $(".server-msg").html("Attendance will be marked for "+dateText+". To mark attendance for "+$("#date-text").val()+". Click <span class='text-danger'>CHANGE</span> button above else click <span class='text-danger'>Mark Attendance</span> once again");
+            timesMarkAttendanceClicked++;
+        }else{
+            let continuity=true;
+            $(".countSubjectFlag-js").each(function(i){
+                //console.log($     ($($(this).not(".ap-proxy-subject")[0]).parent().next().children()[0]).hasClass("marked"));
+                $(this).not(".ap-proxy-subject").each(function(){
+                    if(!$($(this).parent().next().children()[0]).hasClass("marked")){
+                        $(".server-msg").text("Mark attendance of all subject");
+                        continuity=false;
+                    }
+                });
+
+            });
+
+            if(continuity){
+
+
        jsonData={
            present: new Array(),
            absent: new Array(),
            off: new Array(),
            proxy: new Array(),
-           date: $("#date-text").val(),
+           //date: $("#date-text").val(),
+           date: toDay.toDateString(),
            time: new Date().getTime()
        };
         $(".countSubjectFlag-js").each(function(i){
@@ -286,6 +336,8 @@ cursor: pointer;
                     xhttp.open("post", "/calcAttendance/", true);
                     xhttp.setRequestHeader("Content-type", "application/json;charset=UTF-8");
                     xhttp.send(jsonOData);
+            }
+        }
     });
 });
 
@@ -303,23 +355,27 @@ cursor: pointer;
     <body>
         <div class="row  mx-5 my-2">
             <div class="col">
-                <div class="input-group date-click">
-                    <div class="input-group-prepend">
-                        <span class="px-2 ap-bg-blue ap-border-blue"><i class="fa fa-calendar ap-blue-text" aria-hidden="true"></i></span>
+               <form action="" method="POST" id="form-change">
+                    {% csrf_token %}
+                    <div class="input-group date-click">
+                        <div class="input-group-prepend">
+                            <span class="px-2 ap-bg-blue ap-border-blue"><i class="fa fa-calendar ap-blue-text" aria-hidden="true"></i></span>
+                        </div>
+                        <input type="date" class="form-control-sm ap-bg-blue ap-border-blue ap-blue-text date-textSetter" id="date-text" name="changeDate">
+                        <div class="input-group-prepend">
+                            <span class="ap-bg-blue ap-border-blue">
+                                <button class="ap-button ap-blue-text" data-toggle="tooltip" title="Select date to mark previous attendance" data-placement="bottom" id="change-date">Change</button>
+                            </span>
+                        </div>
                     </div>
-                    <input type="date" class="form-control-sm ap-bg-blue ap-border-blue ap-blue-text" id="date-text">
-                    <div class="input-group-prepend">
-                        <span class="ap-bg-blue ap-border-blue">
-                            <button class="ap-button ap-blue-text" data-toggle="tooltip" title="Select date to mark previous attendance" data-placement="bottom" id="change-date">Change</button>
-                        </span>
-                    </div>
-                </div>
+                </form>
             </div>
         </div>
         <div class="row mx-5 my-2">
             <div class="col">
                 <div class="d-flex justify-content-center">
                 {%for i,j in timeTable.items%}
+                {%if j|length > 0%}
                     <div class="m-4 {%if i != active %}ap-xs-none{%endif%}" id={{i}}>
                         <div class="row">
                             <div class="col">
@@ -339,7 +395,7 @@ cursor: pointer;
                                     {%if i != active %}
                                         {{k}}
                                     {%else%}
-                                        <span class="subjectSpan active py-1 text-center countSubjectFlag-js" data-percent="100" data-toggle="tooltip" title="100%" data-placement="bottom">{{k}}</span>
+                                        <span class="subjectSpan active py-1 text-center countSubjectFlag-js" data-percent={{attendance|get_percent:k}} data-toggle="tooltip" title="{{attendance|get_percent:k}}%" data-placement="bottom">{{k}}</span>
                                     {%endif%}
                                     </div>
                                 {%if i == active %}
@@ -354,6 +410,7 @@ cursor: pointer;
                             </div>
                         </div>
                     </div>
+                {%endif%}
                 {%endfor%}
                 </div>
             </div>
@@ -362,11 +419,9 @@ cursor: pointer;
             <div class="col">
                 <span class="ap-bg-blue ap-blue-text ap-12 p-2 ap-inline-block">Mark Proxy Lectures<i class="fa fa-plus ml-2 ap-pointer" aria-hidden="true" data-toggle="collapse" data-target="#proxy-subject"></i></span>
                 <div id="proxy-subject" class="collapse my-1">
-                    <span class="m-1 ap-proxy-subject ap-pointer p-2 ap-inline-block countSubjectFlag-js">Proxy sub1</span>
-                    <span class="m-1 ap-proxy-subject ap-pointer p-2 ap-inline-block countSubjectFlag-js">Proxy sub2</span>
-                    <span class="m-1 ap-proxy-subject ap-pointer p-2 ap-inline-block countSubjectFlag-js">Proxy sub3</span>
-                    <span class="m-1 ap-proxy-subject ap-pointer p-2 ap-inline-block countSubjectFlag-js">Proxy sub4</span>
-                    <span class="m-1 ap-proxy-subject ap-pointer p-2 ap-inline-block countSubjectFlag-js">Proxy sub5</span>
+                    {%for i in proxySubject%}
+                        <span class="m-1 ap-proxy-subject ap-pointer p-2 ap-inline-block countSubjectFlag-js">{{i}}</span>
+                    {%endfor%}
                 </div>
             </div>
         </div>
