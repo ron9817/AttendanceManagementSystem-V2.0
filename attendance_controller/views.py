@@ -43,7 +43,7 @@ monthMap={
 timetable={
         "Mon":["Project A"],
         "Tue":["CSL","InfraSec","AI","IS","END","STQA"],
-        "Wednes":["CSL","END","AdvSec","AI","InfraSec"],
+        "Wednes":["CSL","END","AdvSec","AI","InfraSec","InfraSec"],
         "Thurs":["AI","AI","InfraSec","STQA","N/W lab","END","CSL"],
         "Fri":["AI","InfraSec","STQA","STQA","AndroidLab","END","END"],
         "Sat":[],
@@ -84,12 +84,14 @@ def index(request):
             attendedLec=len(Qs.filter(ispresent=1))
             attendance[subject]=[totalLec,attendedLec,0,0]
         #print(day,month,year,weekDay)
+    totalA=(len(Dailyattendance.objects.filter(ispresent=1)))/(len(Dailyattendance.objects.exclude(ispresent=0)))*100
     context={
         "timeTable":timetable,
         "active":weekMap[weekDay],
         "activeDate":[year,month-1,day],
         "attendance":attendance,
-        "proxySubject":set(attendance.keys())-set(timetable[weekMap[weekDay]])
+        "proxySubject":set(attendance.keys())-set(timetable[weekMap[weekDay]]),
+        "total":totalA
         }
     return render(request, "attendance_controller/index.html",context)
 @csrf_exempt
